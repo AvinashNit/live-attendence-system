@@ -1,0 +1,19 @@
+
+{
+    "name": "Bun Development",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace/app",
+  
+    "shutdownAction": "stopCompose",
+  
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "oven.bun-vscode",
+          "esbenp.prettier-vscode",
+          "dbaeumer.vscode-eslint"
+        ]
+      }
+    }
+}
