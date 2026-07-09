@@ -1,24 +1,24 @@
+import { hashPassword } from "../../utils/hashpassword.utils";
 import { prisma } from "../config/prisma.config"
 import type { SignUpBody } from "../schemas/auth.schema"
 import type { User } from "../types/user.types"
 
-export async function makeUserEntry( user: SignUpBody ): Promise< User >{
+export async function makeUserEntry( user: SignUpBody ){
 
     const newCreatedUser  =  await prisma.user.create({
         data:{
             email: user.email,
-            password:user.password,
+            password:await hashPassword( user.password),
             name: user.name,
             role:user.role
 
 
         }
-    })
-    const { password, ...rest  } = newCreatedUser;
-    return rest;
+    });
+    return newCreatedUser;
 }
 
-export async function findUserByEmail( email: string ): Promise< User>{
+export async function findUserByEmail( email: string ){
     const user =  await prisma.user.findUnique({
         where:{
             email: email
@@ -26,8 +26,8 @@ export async function findUserByEmail( email: string ): Promise< User>{
     })
     if( user )
     {
-        const { password ,...rest } = user ;
-        return rest;
+        
+        return user;
     }
     else
         throw new Error(`User with email ${ email } not found`)
@@ -35,7 +35,7 @@ export async function findUserByEmail( email: string ): Promise< User>{
 }
 
 
-export async function findUserById( id : string ): Promise< User >
+export async function findUserById( id : string )
 {
     const user =  await prisma.user.findUnique({
         where:{
@@ -44,8 +44,8 @@ export async function findUserById( id : string ): Promise< User >
     })
     if( user )
     {
-        const { password , ...rest } = user;
-        return rest;
+       
+        return user;
     }
     else
         throw new Error(`User with id ${ id } not found`)
@@ -61,3 +61,5 @@ export async function userExists( email: string )
     })
     return userExists ?  true : false
 }
+
+

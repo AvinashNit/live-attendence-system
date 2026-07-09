@@ -26,5 +26,12 @@ export const signupSchema = z.object({
     })
 })
 
+
+export const tokenSchem = z.object({
+    token:z.string().trim().min(1, {
+        error:"token cannot be null"
+    })
+})
+
 export type SignUpBody = z.infer< typeof signupSchema >;
 export type LoginBody = z.infer< typeof loginSchema >; 
