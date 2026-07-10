@@ -3,7 +3,15 @@ import cors from "cors";
 import { authRouter } from "./src/routes/auth.routes";
 import { classRouter } from "./src/routes/class.routes";
 
-const app =  express();
+import { WebSocketServer  } from "ws";
+import { createServer } from "http";
+
+import { intializeWebsocket  } from "./src/websocket/websocket";
+
+
+
+
+const  app =  express();
 app.use( express.json() );
 
 app.use( cors() )
@@ -12,7 +20,14 @@ app.use( authRouter );
 
 app.use( classRouter )
 
+const  server = createServer( app );
 
-app.listen( 3000, ()=>{
+export const wss = new WebSocketServer({
+     server
+})
+
+intializeWebsocket();
+
+ server.listen( 3000, ()=>{
     console.log(" Server is running over 3000")
 })

@@ -4,7 +4,7 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 const attendanceRouter =  express.Router();
 
 
-attendanceRouter.post("/attendance/start", authMiddleware )
+attendanceRouter.post("/attendance/start", authMiddleware ,startAttendanceSession )
 
 
 

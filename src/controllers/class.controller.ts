@@ -189,7 +189,7 @@ export function fetchMyAttendance( req: Request, res: Response )
     })
 
     const validatedStudentId =  classIdSchema.safeParse( {
-        studentId 
+        classId:studentId 
     })
 
     if( !validatedClassId.success )
