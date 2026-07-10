@@ -1,10 +1,10 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { tokenSchem } from "../schemas/auth.schema";
 import type { FailureResponse } from "../types/response.types";
 import { verifyToken } from "../../utils/jwt.util";
 
 
-export function authMiddleware( req: Request, res: Response)
+export function authMiddleware( req: Request, res: Response , next: NextFunction )
 {
     const  token    = req?.headers?.authorization?.split(" ")[1];
 
@@ -24,8 +24,10 @@ export function authMiddleware( req: Request, res: Response)
 
     }
     try{
-        const decoded = verifyToken( token! );
-        req.user = decoded;
+        const decoded = verifyToken( token! ) as { id: string, role: "teacher" | "student" }
+        req.user = { id: decoded.id, role: decoded.role } ;  
+
+        next()
     }
     catch( err )
     {
