@@ -23,7 +23,8 @@ app.use( classRouter )
 const  server = createServer( app );
 
 export const wss = new WebSocketServer({
-     server
+     server,
+     path:"/ws"
 })
 
 intializeWebsocket();

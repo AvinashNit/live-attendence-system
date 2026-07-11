@@ -2,10 +2,10 @@ import type { Request, Response } from "express";
 import  { classIdSchema } from "../schemas/class.schema";
 import { success } from "zod";
 
-let session : null | {
+ export let session : null | {
     classId: string,
     startedAt: string
-} = null;
+ } = null;
 
 
 export function startAttendanceSession( req: Request, res: Response ){
