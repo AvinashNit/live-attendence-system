@@ -8,7 +8,7 @@ import { createServer } from "http";
 
 import { intializeWebsocket  } from "./src/websocket/websocket";
 
-
+import { attendanceRouter } from "./src/routes/attendanece.routes";
 
 
 const  app =  express();
@@ -19,6 +19,8 @@ app.use( cors() )
 app.use( authRouter );
 
 app.use( classRouter )
+
+app.use( attendanceRouter )
 
 const  server = createServer( app );
 
